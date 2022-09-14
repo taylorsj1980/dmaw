@@ -12,12 +12,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Application\\": "src/dmaw/"
+            "Dmaw\\": "src/dmaw/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "ApplicationTest\\": "test/dmaw/"
+            "DmawTest\\": "test/dmaw/"
         }
     }
 }
