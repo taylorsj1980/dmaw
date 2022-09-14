@@ -1,0 +1,23 @@
+{
+    "name": "taylorsj1980/dmaw",
+    "description": "Data Model API Wrapper",
+    "require": {
+        "php": "~8.0.0",
+        "guzzlehttp/guzzle": "^7.5"
+    },
+    "config": {
+        "platform": {
+            "php": "8.0.0"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Application\\": "src/dmaw/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ApplicationTest\\": "test/dmaw/"
+        }
+    }
+}
