@@ -2,6 +2,6 @@
 
 namespace DmawTest;
 
-class DmawTest
+class ClientTest
 {
 }
