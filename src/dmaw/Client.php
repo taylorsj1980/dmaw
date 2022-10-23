@@ -16,6 +16,17 @@ use ReflectionProperty;
 class Client
 {
     /**
+     * Command flag
+     */
+    const COMMAND_FLAG = '@dmaw';
+
+    /**
+     * Command keywords
+     */
+    const COMMAND_EXCLUDE = 'exclude';
+    const COMMAND_INCLUDE = 'include';
+
+    /**
      * @var GuzzleClient
      */
     private $httpClient;
@@ -173,9 +184,9 @@ class Client
         $dmawClassCommand = self::getDmawCommand($dataObjectReflection);
 
         //  If the class is marked as exclude then never include the data - even if any parent class marked this data as include
-        if ($dmawClassCommand != Commands::EXCLUDE) {
+        if ($dmawClassCommand != self::COMMAND_EXCLUDE) {
             //  Include the data if flagged to do so, or if we're in include mode (i.e. the parent class had this data to include)
-            if ($dmawClassCommand == Commands::INCLUDE || $includeMode) {
+            if ($dmawClassCommand == self::COMMAND_INCLUDE || $includeMode) {
                 //  Loop through the properties and determine what data to include
                 foreach ($dataObjectReflection->getProperties() as $dataObjectPropertyRelfection) {
                     if ($dataObjectPropertyRelfection instanceof ReflectionProperty) {
@@ -185,7 +196,7 @@ class Client
                         $dmawPropertyCommand = self::getDmawCommand($dataObjectPropertyRelfection);
 
                         //  Skip excluded properties
-                        if ($dmawPropertyCommand == Commands::EXCLUDE) {
+                        if ($dmawPropertyCommand == self::COMMAND_EXCLUDE) {
                             continue;
                         }
 
@@ -230,8 +241,8 @@ class Client
 
         $docComment = $reflectionData->getDocComment();
 
-        if (is_string($docComment) && stripos($docComment, Commands::FLAG) > 0) {
-            $parts = explode(Commands::FLAG, $docComment);
+        if (is_string($docComment) && stripos($docComment, self::COMMAND_FLAG) > 0) {
+            $parts = explode(self::COMMAND_FLAG, $docComment);
 
             if (count($parts) > 1) {
                 $parts2 = explode(' ', trim($parts[1]));
@@ -241,8 +252,8 @@ class Client
                     $command = trim(array_shift($parts2));
 
                     if (in_array($command, [
-                        Commands::EXCLUDE,
-                        Commands::INCLUDE,
+                        self::COMMAND_EXCLUDE,
+                        self::COMMAND_INCLUDE,
                     ])) {
                         return $command;
                     }
